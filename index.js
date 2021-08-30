@@ -11,28 +11,28 @@ const productsData = JSON.parse(data);
 
 const server = http.createServer((req, res) => {
 
-  const {query, pathname} = url.parse(req.url, true)
+  const { query, pathname } = url.parse(req.url, true)
 
   //OVERVIEW PAGE
-  if(pathname === '/' || pathname === '/overview' ){
-    res.writeHead(200, {'Content-type': 'text/html'});
-    
+  if (pathname === '/' || pathname === '/overview') {
+    res.writeHead(200, { 'Content-type': 'text/html' });
+
     const cardsHTML = productsData.map(el => replaceTemplate(tempCard, el)).join('');
     const output = tempOverview.replace(/{%product_cards%}/g, cardsHTML);
     res.end(output);
-  } 
+  }
 
   //PRODUCT PAGE
-  else if(pathname=== '/product'){
-    res.writeHead(200, {'Content-type': 'text/html'});
+  else if (pathname === '/product') {
+    res.writeHead(200, { 'Content-type': 'text/html' });
     const product = productsData[query.id];
     const output = replaceTemplate(tempProduct, product)
     res.end(output);
-  } 
-  
+  }
+
   //API
-  else if(pathname=== '/api'){
-    res.writeHead(200, {'Content-type': 'application/json'});
+  else if (pathname === '/api') {
+    res.writeHead(200, { 'Content-type': 'application/json' });
     res.end(data);
   }
 
